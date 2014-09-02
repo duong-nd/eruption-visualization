@@ -1,0 +1,29 @@
+. gmt_shell_functions.sh
+gmtset PAPER_MEDIA=Custom_570x570 FRAME_WIDTH=0.2c LABEL_FONT_SIZE=12p ANNOT_FONT_SIZE_PRIMARY=12p HEADER_FONT_SIZE=20p
+gmtset INPUT_CLOCK_FORMAT=hh:mm:ss INPUT_DATE_FORMAT=yyyy-mm-dd TIME_FORMAT_PRIMARY abbreviated PLOT_DATE_FORMAT o
+gmtset OUTPUT_DATE_FORMAT=yyyy-mm-dd
+gmtset PAGE_COLOR=243/255/237 
+gmtset CHAR_ENCODING ISOLatin1+
+makecpt -Crainbow -T-50/0/5 -Z > eq.cpt
+frame=0
+name="frame"
+azim=175
+exitFlag=0
+while (($azim <= 360)); do 
+file=`gmt_set_framename $name $frame ` 
+awk -F , '{if ($5<=1) {print $3,$2,(-1)*$4,(-1)*$4,0.16} else if ($5>=5) {print $3,$2,(-1)*$4,(-1)*$4,0.7 } else {print $3,$2,(-1)*$4,(-1)*$4,0.16*$5}}' eq.txt | psxyz -R139.42041104464/139.63760287138/33.989052287003/34.168944844344/-50/0 -JM3.5i -JZ3.5i -E$azim/25 -B0.043438365348436/0.035978511468184/10::wsneZ+ -Sc -Ceq.cpt -Wthinnest -X2i -Y2.5i -K -P  > eq.ps
+psbasemap -R139.42041104464/139.63760287138/33.989052287003/34.168944844344 -J -E$azim/25 -T139.60760287138/34.078998565674/1i --COLOR_BACKGROUND=red --TICK_PEN=thinner,black -O -K >> eq.ps
+psbasemap -R -J -O -K -E$azim/25 -Lf139.52900695801/33.959052287003/33.959052287003/20k --TICK_PEN=thinner,black  >> eq.ps
+psscale -Ceq.cpt -D2i/-1.0i/4.5i/0.2ih -O -K -Ac -B5:DEPTH:/:km: -E >> eq.ps
+pslegend -Dx2i/-1.8i/6.0i/0.575i/TC -J -R -O -F gmt.legend -Glightyellow >> eq.ps
+ps2raster eq.ps -Tj -E100
+mv eq.jpg $file.jpg
+frame=`gmt_set_framenext $frame`
+((azim += 30))
+if (( ($azim > 360) && ($exitFlag==0) ));
+then
+azim=360
+exitFlag=1 
+fi
+done 
+convert -delay 250  *.jpg eq.gif

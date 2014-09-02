@@ -1,0 +1,10 @@
+H 10 1  Magnitude
+D 0 1p
+N 5
+V 0 1p
+S 0.6c c 0.16c - 0.3p 1c M 1
+S 0.6c c 0.32c - 0.3p 1c M 2
+S 0.6c c 0.48c - 0.3p 1c M 3
+S 0.6c c 0.64c - 0.3p 1c M 4
+S 0.6c c 0.8c - 0.35p 1c M > 4
+V 0 1p 

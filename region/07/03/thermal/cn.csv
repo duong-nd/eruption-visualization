@@ -1,0 +1,3 @@
+cn_id,cn_code,vd_id,cn_sub,cn_name,cn_type,cn_area,cn_map,cn_stime,cn_stime_unc,cn_etime,cn_etime_unc,cn_utc,cn_desc,cn_com,cc_id,cc_id2,cc_id3,cn_loaddate,cn_pubdate
+1,PB_strain1,,,PBO Strainmeters Network,NULL,NULL,,2005-06-15 00:00:00,,,,NULL,Whole network of strainmeters,comments,123,,,2005-06-15 00:00:00,2006-06-15 00:00:00
+1,PB_strain1,,,PBO Strainmeters Network,NULL,NULL,,2005-06-15 00:00:00,,,,NULL,Whole network of strainmeters,comments,123,,,2005-06-15 00:00:00,2006-06-15 00:00:00

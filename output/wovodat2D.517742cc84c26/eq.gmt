@@ -1,0 +1,31 @@
+gmtset PAPER_MEDIA=A4 FRAME_WIDTH=0.15c LABEL_FONT_SIZE=12p ANNOT_FONT_SIZE_PRIMARY=12p HEADER_FONT_SIZE=20p
+gmtset INPUT_CLOCK_FORMAT=hh:mm:ss INPUT_DATE_FORMAT=yyyy-mm-dd TIME_FORMAT_PRIMARY abbreviated PLOT_DATE_FORMAT o
+gmtset OUTPUT_DATE_FORMAT=yyyy-mm-dd
+gmtset CHAR_ENCODING ISOLatin1+
+makecpt -Cno_green -I -T0/20/1 > eq.cpt
+psbasemap -Jm51.220458493703 -R-122.31794886123/-122.05805174912/46.108054484269/46.28794704161 -Ba9mf5mg5m:."St. Helens(500 events)":WesN -X2.3c -Y14c -P -K > eq.ps
+pscoast -J -R -Df -W1p -S150/170/255 -N1/1.5p,black -N2/1p,50/50/50 -Tf178/-35/1i/2 -O -K >> eq.ps
+pscoast -J -R -Df -C0/169/223 -Lf-122.188000305176/46.118848037709/46.1980007629395/10k+u -O -K >> eq.ps
+awk -F , '{print $3,$2,$4}' eq.txt | psxy -J -R -Sc0.075i -Ceq.cpt -G255 -W0.25p -O -K >> eq.ps
+printf '0 0
+1 0
+1 -1
+0 -1
+0 0
+' | psxy -R-5/20/46.108054484269/46.28794704161 -Jx0.17c/74 -Ba5f5g0/a5f5g0::wesN -W1 -P -O -X14c -Y0 -K >> eq.ps
+awk -F , '{if ($3>=-122.31794886123 && $3<=-122.05805174912) {print $4,$2,$4}}' eq.txt | psxy -R -J  -Sc0.075i -Ceq.cpt -W0.25p -O -K >> eq.ps
+printf '0 0
+1 0
+1 -1
+0 -1
+0 0
+' | psxy -R-122.31794886123/-122.05805174912/-20/5 -Jx51.220458493703/0.17c -Ba5f5g0/a5f5g0 -W1 -P -O -X-14c -Y-5c -K >> eq.ps
+awk -F , '{if ($2>=46.108054484269 && $2<=46.28794704161) {print $3,-$4,$4}}' eq.txt | psxy -R -J  -Sc0.075i -Ceq.cpt -W0.25p -O -K >> eq.ps
+psscale -D16c/2c/-4c/0.3c -Ceq.cpt -B10f10/:"Depth (km)": -O -K >> eq.ps
+cat eq.txt | sed s/\ /T/g | awk -F , {'print $6,-$4,$4'} > eq.xyz
+R=`minmax -fT -I5 eq.xyz`
+echo 'testing'
+gmtset PLOT_DATE_FORMAT o TIME_FORMAT_PRIMARY Character ANNOT_FONT_SIZE_PRIMARY +9p
+psbasemap $R -JX17c/4c -Bs2y/WESn  -Bp/a10f10g0 -P -Y-5c -U"by WOVOdat/EOS" -O -K >> eq.ps
+psxy eq.xyz -R -J -Sc0.075i -Ceq.cpt  -W0.25p -V -O >> eq.ps
+convert eq.ps eq.png
