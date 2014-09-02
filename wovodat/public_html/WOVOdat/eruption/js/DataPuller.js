@@ -29,7 +29,6 @@ DataPuller.getEruptionList = function(args) {
 		},
 		dataType: "json"
 	}).done(function(result) {
-		console.log(result);
 		args.data = result;
 		handler(args);
 	});

@@ -1,4 +1,3 @@
-<?php include '/php/include/header_beta.php'; ?>
 <html>
   <head>
 		<title>WOVOdat :: The World Organization of Volcano Observatories (WOVO): Database of Volcanic Unrest (WOVOdat), by IAVCEI</title>
@@ -24,31 +23,33 @@
 		<script type="text/javascript" src="js/script.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body>
-    <div id = "volcanodiv"> 
-      <select id = "volcano"></select>
-      <select id = "eruptionselect"></select>
+	<body>
+		<div id="wrapborder">
+		<div id="wrap">
+		<?php include 'php/include/header_beta.php'; ?>
+			<?php
+			// Start session
+			$uname = "";
 
-    </div>
-    <div id = "eruptiondiv"> 
-    </div>
+			// If session was already started
+			if (isset($_SESSION['login'])) {
+				// Get login ID and user name
+				$uname = $_SESSION['login']['cr_uname'];
+				$cp_access = $_SESSION['permissions']['access'];				
+				if ($cp_access == 0) {
+					include 'content.php';					
+					exit();
+				}
+			}
+			include 'index.php';
+			?>
+		</div>
+		
+		</div>        
+		<div class="wrapborder_x">
+            <?php include 'php/include/footer_main_beta.php'; ?>
+        </div>
 
-    <div id="eruption_graph"></div>
-    <div id="eruption_forecast_graph"></div>	
-	<div id="data_series_box">
-	<div id="data_series_checkbox"></div>
-	</div>
-	<div id="overview_title"></div>	<div id="data_series_overview"></div>
-	<div id="graph1_title"></div>	<div id="data_series_graph1"></div>
-	<div id="graph2_title"></div>	<div id="data_series_graph2"></div>
-	<div id="graph3_title"></div>	<div id="data_series_graph3"></div>
-	<div id="graph4_title"></div>	<div id="data_series_graph4"></div>
-	
-    <div id="tooltip"></div>
-	<div class="wrapborder_x">
-		<?php include 'php/include/footer_main_beta.php'; ?>
-	</div>
-	
   </body>
   
 </html>

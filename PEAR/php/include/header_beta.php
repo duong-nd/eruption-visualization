@@ -42,6 +42,8 @@ if (!isset($_SESSION))
     <div id="headerspacer1"></div>
     <div id="header1">
 	<div id="wovologo">
+	<a href="http://www.wovo.org/" target="_blank"><p align="center"><img src="/gif2/WOVO_logo.gif" alt="WOVO logo" width="40" height="40" border="0"></p></a>
+
 	</div>
         <div align="left" id="wovodatlogo">
             <a href="http://www.wovodat.org/" target="_parent"><b><span style="font-family:lucida,sans-serif; font-size:32px; color:#0005b2;">WOVOdat</span></b><span style="font-family:lucida,sans-serif; font-size:12px; color:#fdfdfd;"> &nbsp ...A Database of Volcanic Unrest</span></a>

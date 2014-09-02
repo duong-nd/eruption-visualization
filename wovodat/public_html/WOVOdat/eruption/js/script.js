@@ -136,7 +136,7 @@ $(document).ready(function () {
 	$("#volcano").change(function() {
 		eruptionSelect = $('#eruptionselect');
 		eruptionSelect.empty();
-		eruptionSelect.append(new Option("...", null));
+		//eruptionSelect.append(new Option("...", null));
 		$('#data_series_checkbox').empty();
 	
 		var volcano = $("#volcano").val();

@@ -4,17 +4,16 @@ function plotEruption(args) {
 	var ed_data = [];
 	var ed_phs_data = [];
 	var end_of_time = 0;
-
+	
 
 	function convertDate(d) {
 		return (d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate());		
 	}
 
 	function initData() {
-
 		for(var i in data) {
 			var ed = data[i];
-			console.log(ed.ed_stime);
+			
 			ed.ed_stime = parseInt(ed.ed_stime);
 			ed.ed_etime = parseInt(ed.ed_etime);
 			ed.ed_vei = parseInt(ed.ed_vei);
@@ -23,9 +22,9 @@ function plotEruption(args) {
 				ed.ed_etime = new Date().getTime();
 			}
 
-			console.log(new Date(ed.ed_stime));
+			
 			eruptionSelect.append(new Option(convertDate(new Date(ed.ed_stime)), ed.ed_stime));
-
+			eruptionSelect.val(ed.ed_stime);
 
 			var ed_stime = ed.ed_stime;
 			var ed_etime = ed.ed_etime;

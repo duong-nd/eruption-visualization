@@ -1,6 +1,7 @@
 <?php
 	class TimeFormatter {
 		public static function getJavascriptTimestamp($src) {
-			return strtotime($src) * 1000;
+			$date = new DateTime($src);
+			return $date->format('U') . '000';
 		}
 	}

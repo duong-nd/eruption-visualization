@@ -5,12 +5,14 @@ body {
 
 #eruption_graph {
 	display: block;
+	background-color: #fff;
 	width: 800px;
 	height: 200px;
 }
 
 #eruption_forecast_graph {
 	display: block;
+	background-color: #fff;
 	width: 800px;
 	height: 60px;
 }
