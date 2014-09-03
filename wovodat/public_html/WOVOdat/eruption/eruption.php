@@ -32,7 +32,7 @@
 			<?php
 			// Start session
 			$uname = "";
-			$_SESSION['login'] = 'z';
+			//$_SESSION['login'] = 'z';
 			// If session was already started
 			if (isset($_SESSION['login'])) {
 				// Get login ID and user name
