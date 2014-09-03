@@ -33,7 +33,10 @@ WOVODAT.registerModule("content", ["utility"], function(sandbox) {
 		all_done_callback = function() {
 			if (preset_vd_id && preset_stime && changed_time === false && eruption_plot_done && eruption_forecast_plot_done && overview_plot_done) {
 				changed_time = true;
-				$("#eruptionselect").val(preset_stime).change();
+				preset_stime = preset_stime.replace("%20", "T");
+				preset_stime = new Date(preset_stime).getTime();
+				if ($('#eruptionselect option[value="' + preset_stime + '"]').length > 0)
+					$("#eruptionselect").val(preset_stime).change();
 			}
 		};
 	return {
@@ -102,10 +105,6 @@ WOVODAT.registerModule("content", ["utility"], function(sandbox) {
 			
 			$("#eruption_graph").bind("plotpan", sync);
 			$("#eruption_graph").bind("plotzoom", sync);
-
-
-
-
 		}
 	};
 });

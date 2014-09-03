@@ -37,10 +37,10 @@ function plotEruptionForecast(args) {
 		xaxis: {
 			min: end_of_time - ONE_YEAR,
 			max: end_of_time,
-			autoscale: false,
+			autoscale: true,
 			mode: "time",
 			timeformat: "%Y-%m",
-			tickSize: [1, "month"]
+			//tickSize: [1, "month"]
 		},
 		yaxis: {
 			show:false,

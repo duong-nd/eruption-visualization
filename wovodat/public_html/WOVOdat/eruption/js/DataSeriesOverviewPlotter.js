@@ -110,7 +110,7 @@ function plotOverview(args) {
 				autoscale: true,
 				mode: "time",
 				timeformat: "%Y-%m",
-				tickSize: [1, "month"]
+				//tickSize: [1, "month"]
 				
 				//timeformat: "%Y-%m-%d %H:%M:%S"
 			},
