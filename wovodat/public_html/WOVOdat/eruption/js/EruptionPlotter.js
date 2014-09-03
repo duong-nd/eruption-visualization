@@ -151,7 +151,7 @@ function plotEruption(args) {
         }
     });
 
-	Observer.notify("eruption-plot-done");
+	WOVODAT.observer.notify("eruption-plot-done");
 
 	//when user selects an eruption
 /*	$("#eruptionselect").change(function() {

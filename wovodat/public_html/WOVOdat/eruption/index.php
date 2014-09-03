@@ -1,4 +1,4 @@
-		<div id="content">		
+		<div id="content" style="background-color:#ffffff">		
 
 			<div style="position:relative; width:60%;" title="Notice" id="notice">
 				<p><b>For details visualization, please <a href="/populate/index.php">log in </b></a>

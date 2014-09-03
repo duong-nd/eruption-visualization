@@ -69,5 +69,5 @@ function plotEruptionForecast(args) {
         }	
     });
 
-    Observer.notify("eruption-forecast-plot-done");
+    WOVODAT.observer.notify("eruption-forecast-plot-done");
 }

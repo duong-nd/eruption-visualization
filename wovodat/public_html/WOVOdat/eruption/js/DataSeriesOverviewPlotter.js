@@ -203,5 +203,5 @@ function plotOverview(args) {
 		}
 	}
 
-	Observer.notify("overview-plot-done");
+	WOVODAT.observer.notify("overview-plot-done");
 }

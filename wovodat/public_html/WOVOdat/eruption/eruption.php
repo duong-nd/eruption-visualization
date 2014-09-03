@@ -10,6 +10,7 @@
 		<link href="/css/styles_beta.css" rel="stylesheet"> 
 		<link href="/css/tooltip.css" rel="stylesheet">
 
+		<script type="text/javascript" src="js/core.js"></script>
 		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="js/flot/jquery.flot.wovodat.js"></script>
 		<script type="text/javascript" src="js/flot/jquery.flot.navigate.js"></script>
@@ -20,6 +21,7 @@
 		<script type="text/javascript" src="js/EruptionPlotter.js"></script>
 		<script type="text/javascript" src="js/EruptionForecastPlotter.js"></script>
 		<script type="text/javascript" src="js/DataSeriesPlotter.js"></script>    
+		<script type="text/javascript" src="js/modules.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
@@ -30,18 +32,18 @@
 			<?php
 			// Start session
 			$uname = "";
-
+			$_SESSION['login'] = 'z';
 			// If session was already started
 			if (isset($_SESSION['login'])) {
 				// Get login ID and user name
 				$uname = $_SESSION['login']['cr_uname'];
 				$cp_access = $_SESSION['permissions']['access'];				
 				if ($cp_access == 0) {
-					include 'content.php';					
-					exit();
+					include 'content.php';
 				}
+			} else {
+				include 'index.php';
 			}
-			include 'index.php';
 			?>
 		</div>
 		
