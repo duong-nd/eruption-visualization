@@ -3,6 +3,7 @@ function convert(str) {
 	var stns = str.split(";");
 	for(var i in stns) {
 		temp = stns[i].split("&");
+		if (temp.length < 2) break;
 		stn = {
 			type: temp[0].toLowerCase(),
 			table: temp[1],
@@ -11,7 +12,6 @@ function convert(str) {
 			lon: temp[4],
 		} 
 		if (temp[5]) stn.component = temp[5];
-		if (temp[0].length < 2) break;
 		data.push({
 			station: stn
 		});		
