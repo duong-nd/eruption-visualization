@@ -60,7 +60,7 @@ function plotOverview(args) {
 		},
 		yaxis: {
 			//min: min_data,	max: max_data,
-			autoscale: true,
+			autoscale: false,
 	//		tickFormatter: function(val, axis) { return val < axis.max ? val.toFixed(2) : "VEI";}
 		},
 

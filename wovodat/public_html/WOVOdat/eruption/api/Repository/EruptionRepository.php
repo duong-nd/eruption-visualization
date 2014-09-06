@@ -117,10 +117,10 @@
 		*/
 		public static function getEruptionForecastList($vd_id) {
 			global $db;
-			$query = "select ed_for_id, ed_for_alevel, ed_for_astime, ed_for_aetime from ed_for where vd_id = %d";
+			$query = "select ed_for_id, ed_for_alevel, ed_for_astime, ed_for_aetime from ed_for where vd_id = %d and ed_for.ed_phs_id > 0";
 			$db->query($query, $vd_id);
 			$result = $db->getList();
-			foreach($result as &$value) {
+			foreach ($result as &$value) {
 				$value['ed_for_astime'] = TimeFormatter::getJavascriptTimestamp($value['ed_for_astime']);
 				$value['ed_for_aetime'] = TimeFormatter::getJavascriptTimestamp($value['ed_for_aetime']);
 			}
