@@ -3,9 +3,10 @@ session_start();
 require_once "php/include/get_root.php";
 
 
-if(!isset($_SESSION['login'])){       // can't proceed without log in
+/*if(!isset($_SESSION['login'])){       // can't proceed without log in
 	header('Location: '.$url_root.'login_required.php');
-}else{
+}else*/
+{
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,6 +29,8 @@ if(!isset($_SESSION['login'])){       // can't proceed without log in
 		<script type="text/javascript" src="js/flot/jquery.flot.navigate.js"></script>
 		<script type="text/javascript" src="js/flot/jquery.flot.selection.js"></script>
 		<script type="text/javascript" src="js/flot/jquery.flot.time.js"></script>
+		<script type="text/javascript" src="js/flot/moment.js"></script>
+		
 		<script type="text/javascript" src="js/DataSeriesOverviewPlotter.js"></script>
 		<script type="text/javascript" src="js/DataPuller.js"></script>
 		<script type="text/javascript" src="js/EruptionPlotter.js"></script>

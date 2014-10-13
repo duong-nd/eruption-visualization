@@ -58,9 +58,10 @@ function plotEruptionForecast(args) {
     		
     		var ed_for = item.series.data[item.dataIndex][4];
     		content = ed_for.ed_for_alevel + "<br/>";
-    		content += new Date(ed_for.ed_for_astime).toLocaleDateString();
+    		content += convertDate(new Date(ed_for.ed_for_astime));
+			
     		content += " to ";
-    		content += new Date(ed_for.ed_for_aetime).toLocaleDateString();
+    		content += convertDate(new Date(ed_for.ed_for_aetime));
 
             showTooltip(pos.pageX, pos.pageY, content);
         } else {

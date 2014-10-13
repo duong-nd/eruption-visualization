@@ -32,11 +32,18 @@ WOVODAT.registerModule("content", ["utility"], function(sandbox) {
 		overview_plot_done = false,
 		all_done_callback = function() {
 			if (preset_vd_id && preset_stime && changed_time === false && eruption_plot_done && eruption_forecast_plot_done && overview_plot_done) {
-				changed_time = true;
-				preset_stime = preset_stime.replace("%20", "T");
-				preset_stime = new Date(preset_stime).getTime();
-				if ($('#eruptionselect option[value="' + preset_stime + '"]').length > 0)
-					$("#eruptionselect").val(preset_stime).change();
+				changed_time = true;			
+				preset_stime = moment.utc(preset_stime,"YYYY-MM-DDTHH:mm:ss Z");
+				console.log(preset_stime);
+				console.log(preset_stime.unix());
+				var eruptionSelect = document.getElementById("eruptionselect"); 
+				for (var i = 0; i < eruptionSelect.length; i ++) {
+					if (Math.abs(eruptionSelect[i].value - preset_stime) < THREE_HRS){
+						$("#eruptionselect").val(eruptionSelect[i].value).change();
+						break;
+					}
+				}
+				//if ($('#eruptionselect option[value="' + preset_stime + '"]').length > 0) $("#eruptionselect").val(preset_stime).change();
 			}
 		};
 	return {

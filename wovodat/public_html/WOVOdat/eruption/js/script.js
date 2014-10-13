@@ -1,4 +1,5 @@
 var ONE_YEAR = ((new Date("0002-01-01T00:00:00")).getTime() - (new Date("0001-01-01T00:00:00")).getTime());
+var THREE_HRS = ((new Date("0002-01-01T03:00:00")).getTime() - (new Date("0002-01-01T00:00:00")).getTime());
 var ds_plot = [];
 ds_plot.push("#data_series_graph1");
 ds_plot.push("#data_series_graph2");

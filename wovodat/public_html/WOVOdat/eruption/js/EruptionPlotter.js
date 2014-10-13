@@ -11,6 +11,7 @@ function plotEruption(args) {
 	}
 
 	function initData() {
+		var ok = 1;
 		for(var i in data) {
 			var ed = data[i];
 			
@@ -24,7 +25,10 @@ function plotEruption(args) {
 
 			
 			eruptionSelect.append(new Option(convertDate(new Date(ed.ed_stime)), ed.ed_stime));
-			eruptionSelect.val(ed.ed_stime);
+			if (ok === 1) {
+				eruptionSelect.val(ed.ed_stime);
+				ok = 0;
+			}
 
 			var ed_stime = ed.ed_stime;
 			var ed_etime = ed.ed_etime;
@@ -96,7 +100,7 @@ function plotEruption(args) {
 			tickSize: 1,
 			panRange: false,
 			zoomRange: false,
-			tickFormatter: function(val, axis) { return val < axis.max ? val.toFixed(2) : "VEI";}
+			tickFormatter: function(val, axis) { return val < axis.max ? val.toFixed(0) : "VEI";}
 
 		},
 		pan: {
@@ -132,14 +136,6 @@ function plotEruption(args) {
             		
             		if(ed_phs.ed_phs_vei)
             			content += "VEI: " + ed_phs.ed_phs_vei + "<br/>";
-            	/*	if(ed_phs.ed_phs_dre_tot)
-            			content += "DRE_TOT: " + ed_phs.ed_phs_dre_tot + "<br/>";
-            		if(ed_phs.ed_phs_dre_lav)
-            			content += "DRE_LAV: " + ed_phs.ed_phs_dre_lav + "<br/>";
-            		if(ed_phs.ed_phs_dre_tep)
-            			content += "DRE_TEP: " + ed_phs.ed_phs_dre_tep + "<br/>";
-            		if(ed_phs.ed_phs_col)
-            			content += "COL: " + ed_phs.ed_phs_col + "<br/>";*/
             		break;
 
             }
