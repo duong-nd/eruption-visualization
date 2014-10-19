@@ -1,5 +1,6 @@
 
 function plotEruption(args) {
+  console.log(args.data);
 	var data = args.data;
 	var ed_data = [];
 	var ed_phs_data = [];

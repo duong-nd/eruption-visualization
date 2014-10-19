@@ -1,0 +1,15 @@
+{
+    "controller": "TimeSeriesController",
+    "routing":
+    [
+        {
+            "request": "time_series_list",
+            "method": "loadDataList",
+            "params": 
+                [
+                    "vd_id"
+                ]
+                
+        }
+    ]
+}

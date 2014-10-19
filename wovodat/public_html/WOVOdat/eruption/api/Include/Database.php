@@ -282,4 +282,20 @@
 			mysql_free_result($this->_cursor);
 			return $val;
 		}
+
+		/**
+		 * Return the first column value from the first row from the previous query.
+		 * 
+		 * @return
+		 *   The column value
+		 */
+		function getValue() {
+			if (!$this->_cursor) return null;
+			$val = mysql_fetch_assoc($this->_cursor);
+			mysql_free_result($this->_cursor);
+			if (is_array($val)) {
+				return array_pop($val);
+			}
+			return null;
+		}
 	}
