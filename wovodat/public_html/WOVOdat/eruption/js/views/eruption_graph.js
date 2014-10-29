@@ -14,8 +14,9 @@ define(function(require) {
     el: '#eruption-graph',
     
     initialize: function(options) {
-      _(this).bindAll('render', 'onHover', 'updateStartTime', 'triggerTimeRangeChange');
+      _(this).bindAll('render', 'onHover', 'updateStartTime', 'changeTimeRange');
       this.observer = options.observer;
+      this.timeRange = options.timeRange;
       this.listenTo(this.collection, 'sync', this.render);
       this.listenTo(this.collection, 'change', this.updateStartTime);
     },
@@ -104,15 +105,18 @@ define(function(require) {
       this.graph = $.plot(el, [param_ed, param_ed_phs], option);
 
       el.bind('plothover', this.onHover);
-      el.bind('plotpan', this.triggerTimeRangeChange);
-      el.bind('plotzoom', this.triggerTimeRangeChange);
-      this.triggerTimeRangeChange();
+      el.bind('plotpan', this.changeTimeRange);
+      el.bind('plotzoom', this.changeTimeRange);
+      this.changeTimeRange();
     },
 
-    triggerTimeRangeChange: function() {
+    changeTimeRange: function() {
       var startTime = this.graph.getAxes().xaxis.options.min,
           endTime = this.graph.getAxes().xaxis.options.max;
-      this.observer.trigger('change-time-range', startTime, endTime);
+      this.timeRange.set({
+        startTime: startTime,
+        endTime: endTime
+      });
     },
 
     prepareData: function() {

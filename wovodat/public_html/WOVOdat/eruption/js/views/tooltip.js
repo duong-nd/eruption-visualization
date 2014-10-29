@@ -10,7 +10,7 @@ define(function(require) {
 
     initialize: function() {
       _(this).bindAll('remove');
-      this.$el.html('<div></div>').addClass('tooltip');
+      this.$el.addClass('tooltip');
       this.$el.appendTo('body');
     },
 
@@ -19,7 +19,7 @@ define(function(require) {
         top: y + 5,
         left: x + 20,
       });
-      this.$el.find('div').html(content);
+      this.$el.html(content);
       this.$el.show();
     },
 

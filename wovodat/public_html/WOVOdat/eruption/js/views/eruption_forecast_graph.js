@@ -14,8 +14,9 @@ define(function(require) {
     initialize: function(options) {
       _(this).bindAll('render', 'onHover', 'onTimeRangeChange', 'onDataChange', 'onVolcanoChange');
       this.observer = options.observer;
+      this.timeRange = options.timeRange;
       this.listenTo(this.observer, 'change-volcano-selection', this.onVolcanoChange);
-      this.listenTo(this.observer, 'change-time-range', this.onTimeRangeChange);
+      this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
       this.listenTo(this.collection, 'sync', this.onDataChange);
     },
 
@@ -55,12 +56,12 @@ define(function(require) {
       this.collection.changeVolcano(vd_id);
     },
 
-    onTimeRangeChange: function(startTime, endTime) {
-      this.startTime = startTime;
-      this.endTime = endTime;
+    onTimeRangeChange: function() {
+      this.startTime = this.timeRange.get('startTime');
+      this.endTime = this.timeRange.get('endTime');
       this.render({
-        startTime: startTime,
-        endTime: endTime,
+        startTime: this.startTime,
+        endTime: this.endTime,
         data: this.data
       });
     },

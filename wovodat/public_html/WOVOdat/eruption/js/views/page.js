@@ -3,6 +3,7 @@ define(function(require) {
   var $ = require('jquery'),
       Backbone = require('backbone'),
       _ = require('underscore'),
+      Pace = require('pace'),
       template = require('text!templates/page.html'),
       Volcano = require('models/volcano'),
       Volcanoes = require('collections/volcanoes'),
@@ -13,19 +14,23 @@ define(function(require) {
       EruptionForecasts = require('collections/eruption_forecasts'),
       EruptionForecastGraph = require('views/eruption_forecast_graph'),
       TimeSeries = require('collections/time_series'),
-      TimeSeriesSelect = require('views/time_series_select');
+      TimeSeriesSelect = require('views/time_series_select'),
+      TimeRange = require('models/time_range'),
+      SelectingTimeSeries = require('collections/selecting_time_series'),
+      TimeSeriesContainer = require('views/time_series_container');
 
   return Backbone.View.extend({
     el: '#main',
     
     initialize: function() {
-      this.volcano = new Volcano();
       this.render();
     },
 
     render: function() {
       var eruptions = new Eruptions(),
-          observer = new (Backbone.Model.extend())();
+          observer = new (Backbone.Model.extend())(),
+          timeRange = new TimeRange(),
+          selectingTimeSeries = new SelectingTimeSeries();
 
       new VolcanoSelect({
         collection: new Volcanoes(),
@@ -39,17 +44,26 @@ define(function(require) {
 
       new EruptionGraph({
         collection: eruptions,
-        observer: observer
+        observer: observer,
+        timeRange: timeRange
       });
 
       new EruptionForecastGraph({
         collection: new EruptionForecasts(),
-        observer: observer
+        observer: observer,
+        timeRange: timeRange
       });
 
       new TimeSeriesSelect({
         collection: new TimeSeries(),
-        observer: observer
+        observer: observer,
+        selectingTimeSeries: selectingTimeSeries
+      });
+
+      new TimeSeriesContainer({
+        observer: observer,
+        timeRange: timeRange,
+        collection: selectingTimeSeries
       });
     }
   });

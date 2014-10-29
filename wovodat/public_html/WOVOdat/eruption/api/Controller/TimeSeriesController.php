@@ -11,4 +11,9 @@
 			return TimeSeriesRepository::getTimeSeriesList($vd_id);
 		}	
 
+
+		public static function loadTimeSerie($sr_id) {
+			return TimeSeriesRepository::getTimeSerie($sr_id);
+		}
+
 	}

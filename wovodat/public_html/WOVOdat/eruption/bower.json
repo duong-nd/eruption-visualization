@@ -16,6 +16,7 @@
     "backbone-amd": null,
     "underscore-amd": null,
     "moment": null,
-    "requirejs-text": null
+    "requirejs-text": null,
+    "pace": null
   }
 }

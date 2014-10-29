@@ -5,9 +5,13 @@
 
 		private static function loadFolder($path) {
 			$files = scandir($path);
-			foreach($files as $file) {
+			foreach ($files as $file) {
 				if ($file == '.' || $file == '..') continue;
-				require_once($path . $file);
+				if (is_dir($path . $file)) {
+					self::loadFolder($path . $file . '/');
+				} else if (substr($file, -4) === '.php') {
+					require_once($path . $file);
+				}
 			}
 		}
 
