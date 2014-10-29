@@ -16,14 +16,15 @@ define(function(require) {
     
     initialize: function(options) {
       _(this).bindAll('render', 'changeVolcano');
+      this.volcano = options.volcano;
       this.selectings = options.selectingTimeSeries;
       this.observer = options.observer;
-      this.listenTo(this.observer, 'change-volcano-selection', this.changeVolcano);
+      this.listenTo(this.volcano, 'change', this.changeVolcano);
       this.listenTo(this.collection, 'sync', this.render);
     },
 
-    changeVolcano: function(vd_id) {
-      this.collection.changeVolcano(vd_id);
+    changeVolcano: function() {
+      this.collection.changeVolcano(this.volcano.get('vd_id'));
     },
 
     render: function() {

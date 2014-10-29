@@ -11,18 +11,28 @@ define(function(require) {
     template: _.template(template),
 
     events: {
-      'change select': 'changeEruption'
+      'change select': 'onChangeEruption'
     },
     
     initialize: function(options) {
-      _(this).bindAll('render', 'changeVolcano');
+      _(this).bindAll('render', 'fetchEruptions', 'changeEruption');
+      
       this.observer = options.observer;
-      this.listenTo(this.observer, 'change-volcano-selection', this.changeVolcano);
+      this.volcano = options.volcano;
+      this.selectingEruption = options.selectingEruption;
+
+      this.listenTo(this.volcano, 'change', this.fetchEruptions);
       this.listenTo(this.collection, 'sync', this.render);
+      this.listenTo(this.selectingEruption, 'change', this.changeEruption);
     },
 
-    changeVolcano: function(vd_id) {
-      this.collection.changeVolcano(vd_id);
+    fetchEruptions: function() {
+      this.collection.changeVolcano(this.volcano.get('vd_id'));
+    },
+
+    changeEruption: function(e) {
+      this.$el.find('select').val(this.selectingEruption.get('ed_id'));
+      this.$el.find('select').change();
     },
 
     render: function() {
@@ -31,8 +41,12 @@ define(function(require) {
       }));
     },
 
-    changeEruption: function() {
-      this.collection.trigger('change', parseInt(this.$el.find('select').val(), 10));
+    onChangeEruption: function() {
+      var ed_id = this.$el.find('select').val(),
+          startTime = this.collection.get(ed_id).get('ed_stime');
+
+      this.selectingEruption.set('ed_id', ed_id);
+      this.observer.trigger('change-start-time', startTime);
     }
   });
 });

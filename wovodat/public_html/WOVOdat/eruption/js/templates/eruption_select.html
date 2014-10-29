@@ -1,7 +1,7 @@
 <% if (!_.isEmpty(eruptions)) { %>
   <select>
     <% _.each(eruptions, function(eruption) { %>
-      <option value="<%= eruption.get('ed_stime') %>"><%= eruption.getDate() %></option>
+      <option value="<%= eruption.get('ed_id') %>"><%= eruption.getDate() %></option>
     <% }); %>
   </select>
 <% } else { %>

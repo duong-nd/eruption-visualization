@@ -15,7 +15,8 @@ define(function(require) {
       _(this).bindAll('render', 'onHover', 'onTimeRangeChange', 'onDataChange', 'onVolcanoChange');
       this.observer = options.observer;
       this.timeRange = options.timeRange;
-      this.listenTo(this.observer, 'change-volcano-selection', this.onVolcanoChange);
+      this.volcano = options.volcano;
+      this.listenTo(this.volcano, 'change', this.onVolcanoChange);
       this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
       this.listenTo(this.collection, 'sync', this.onDataChange);
     },
@@ -52,8 +53,8 @@ define(function(require) {
       });
     },
 
-    onVolcanoChange: function(vd_id) {
-      this.collection.changeVolcano(vd_id);
+    onVolcanoChange: function() {
+      this.collection.changeVolcano(this.volcano.get('vd_id'));
     },
 
     onTimeRangeChange: function() {
@@ -96,7 +97,7 @@ define(function(require) {
             }
           };
 
-      if (!options || !options.startTime || !options.endTime || !options.data.length) {
+      if (!options || !options.startTime || !options.endTime || !options.data || !options.data.length) {
         el.html('');
         return;
       }

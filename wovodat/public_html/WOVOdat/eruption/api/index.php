@@ -22,5 +22,5 @@
 	Loader::loadController();
 
 	Loader::setJSONHeader();
-	sleep(1);
+	
 	echo json_encode(Routing::route());

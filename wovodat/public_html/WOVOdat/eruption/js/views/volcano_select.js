@@ -11,27 +11,33 @@ define(function(require) {
     template: _.template(template),
 
     events: {
-      'change select': 'change'
+      'change select': 'onSelectChange'
     },
     
     initialize: function(options) {
-      _(this).bindAll('render');
+      _(this).bindAll('render', 'changeSelection');
       this.observer = options.observer;
+      this.selectingVolcano = options.selectingVolcano;
+
       this.collection.fetch();
       this.listenTo(this.collection, 'sync', this.render);
+      this.listenTo(this.selectingVolcano, 'change', this.changeSelection);
     },
 
     render: function() {
       this.$el.html(this.template({
         volcanoes: this.collection.models
       }));
-      this.change();
     },
 
-    change: function() {
+    changeSelection: function(e) {
+      this.$el.find('select').val(this.selectingVolcano.get('vd_id'));
+    },
+
+    onSelectChange: function() {
       var vd_id = this.$el.find('select').val();
       if (vd_id) 
-        this.observer.trigger('change-volcano-selection', vd_id);
+        this.selectingVolcano.set('vd_id', vd_id);
     }
   });
 });

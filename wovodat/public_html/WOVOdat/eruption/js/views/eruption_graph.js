@@ -18,7 +18,7 @@ define(function(require) {
       this.observer = options.observer;
       this.timeRange = options.timeRange;
       this.listenTo(this.collection, 'sync', this.render);
-      this.listenTo(this.collection, 'change', this.updateStartTime);
+      this.listenTo(this.observer, 'change-start-time', this.updateStartTime);
     },
 
     onHover: function(event, pos, item) {

@@ -7,6 +7,7 @@ define(function(require) {
       template = require('text!templates/page.html'),
       Volcano = require('models/volcano'),
       Volcanoes = require('collections/volcanoes'),
+      Eruption = require('models/eruption'),
       Eruptions = require('collections/eruptions'),
       VolcanoSelect = require('views/volcano_select'),
       EruptionSelect = require('views/eruption_select'),
@@ -17,7 +18,8 @@ define(function(require) {
       TimeSeriesSelect = require('views/time_series_select'),
       TimeRange = require('models/time_range'),
       SelectingTimeSeries = require('collections/selecting_time_series'),
-      TimeSeriesContainer = require('views/time_series_container');
+      TimeSeriesContainer = require('views/time_series_container'),
+      UrlLoader = require('models/url_loader');
 
   return Backbone.View.extend({
     el: '#main',
@@ -30,16 +32,22 @@ define(function(require) {
       var eruptions = new Eruptions(),
           observer = new (Backbone.Model.extend())(),
           timeRange = new TimeRange(),
-          selectingTimeSeries = new SelectingTimeSeries();
+          selectingTimeSeries = new SelectingTimeSeries(),
+          volcanoes = new Volcanoes(),
+          selectingVolcano = new Volcano(),
+          selectingEruption = new Eruption();
 
       new VolcanoSelect({
-        collection: new Volcanoes(),
-        observer: observer
+        collection: volcanoes,
+        observer: observer,
+        selectingVolcano: selectingVolcano
       });
 
       new EruptionSelect({
         collection: eruptions,
-        observer: observer
+        observer: observer,
+        volcano: selectingVolcano,
+        selectingEruption: selectingEruption
       });
 
       new EruptionGraph({
@@ -51,19 +59,29 @@ define(function(require) {
       new EruptionForecastGraph({
         collection: new EruptionForecasts(),
         observer: observer,
-        timeRange: timeRange
+        timeRange: timeRange,
+        volcano: selectingVolcano
       });
 
       new TimeSeriesSelect({
         collection: new TimeSeries(),
         observer: observer,
-        selectingTimeSeries: selectingTimeSeries
+        selectingTimeSeries: selectingTimeSeries,
+        volcano: selectingVolcano
       });
 
       new TimeSeriesContainer({
         observer: observer,
         timeRange: timeRange,
         collection: selectingTimeSeries
+      });
+
+      new UrlLoader({
+        observer: observer,
+        volcanoes: volcanoes,
+        selectingVolcano: selectingVolcano,
+        eruptions: eruptions,
+        selectingEruption: selectingEruption
       });
     }
   });
