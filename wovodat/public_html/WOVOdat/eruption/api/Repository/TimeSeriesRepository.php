@@ -57,7 +57,6 @@ class TimeSeriesRepository {
   	$db->query($query, $vd_id);
   	$vd_cavw = $db->getValue();
 
-    // This is really stupid but currently, there is no other way.
     $strs = explode(';', file_get_contents("http://localhost/php/switch.php?get=TimeSeriesForVolcano&cavw=" . $vd_cavw));
     
     $series = array();

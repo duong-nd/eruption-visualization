@@ -37,7 +37,6 @@ define(function(require) {
         });
         if (ed_id) {
           this.selectingEruption.set('ed_id', ed_id);
-          console.log(this.selectingEruption);
         }
       }
     }

@@ -13,9 +13,11 @@ define(function(require) {
     
     initialize: function(options) {
       _(this).bindAll('render', 'onHover', 'onTimeRangeChange', 'onDataChange', 'onVolcanoChange');
+      
       this.observer = options.observer;
       this.timeRange = options.timeRange;
       this.volcano = options.volcano;
+
       this.listenTo(this.volcano, 'change', this.onVolcanoChange);
       this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
       this.listenTo(this.collection, 'sync', this.onDataChange);

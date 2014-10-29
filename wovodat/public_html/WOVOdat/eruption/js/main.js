@@ -1,6 +1,6 @@
 require.config({
   paths: {
-    // Vendor.
+    // Vendors.
     'jquery': 'vendor/jquery/dist/jquery.min',
     'backbone': 'vendor/backbone-amd/backbone-min',
     'underscore': 'vendor/underscore-amd/underscore-min',

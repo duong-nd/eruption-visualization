@@ -23,9 +23,6 @@ define(function(require) {
       this.render();
     },
 
-    renderOverviewGraph: function(sr_id) {
-    },
-
     addSerie: function(sr_id) {
       this.graphs[sr_id] = new TimeSerieGraph({
         model: this.collection.get(sr_id),
