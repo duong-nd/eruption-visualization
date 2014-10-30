@@ -7,9 +7,9 @@ define(function(require) {
   return Backbone.Collection.extend({
     model: EruptionForecast,
     
-    initialize: function(ed_id) {
-      if (ed_id)
-        this.changeVolcano(ed_id);
+    initialize: function(vd_id) {
+      if (vd_id)
+        this.changeVolcano(vd_id);
     },
 
     changeVolcano: function(vd_id, handler) {

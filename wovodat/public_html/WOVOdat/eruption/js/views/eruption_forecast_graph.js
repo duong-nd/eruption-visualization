@@ -3,10 +3,9 @@ define(function(require) {
   var $ = require('jquery'),
       Backbone = require('backbone'),
       _ = require('underscore'),
-      flot = require(['jquery.flot']),
       Const = require('helper/const'),
       ed_phs_forTemplate = require('text!templates/tooltip_ed_phs_for.html'),
-      tooltip = require('views/tooltip');
+      Tooltip = require('views/tooltip');
 
   return Backbone.View.extend({
     el: '#eruption-forecast-graph',
@@ -18,20 +17,22 @@ define(function(require) {
       this.timeRange = options.timeRange;
       this.volcano = options.volcano;
 
+      this.tooltip = new Tooltip({
+        template: ed_phs_forTemplate
+      });
+
       this.listenTo(this.volcano, 'change', this.onVolcanoChange);
       this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
       this.listenTo(this.collection, 'sync', this.onDataChange);
     },
 
+    previousHover: {
+      dataIndex: null,
+      savedContent: null
+    },
+    
     onHover: function(event, pos, item) {
-      var content;
-      if (item) {
-        tooltip.remove();
-        content = _.template(ed_phs_forTemplate, item.series.data[item.dataIndex][4]);      
-        tooltip.render(pos.pageX, pos.pageY, content);
-      } else {
-        tooltip.remove();
-      }
+      this.tooltip.update(pos, item);
     },
 
     onDataChange: function() {

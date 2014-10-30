@@ -7,8 +7,42 @@ define(function(require) {
 
   return Backbone.View.extend({
     initialize: function(options) {
-      _(this).bindAll('update');
+      _(this).bindAll('update', 'onSelect', 'onTimeRangeChange', 'onSelectingTimeRangeChange');
+      this.timeRange = options.timeRange;
+      this.selectingTimeRange = options.selectingTimeRange;
       this.listenTo(this.collection, 'change remove', this.update);
+      this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
+      this.listenTo(this.selectingTimeRange, 'change', this.onSelectingTimeRangeChange);
+    },
+
+    onSelect: function(event, ranges) {
+      var startTime = ranges.xaxis.from,
+          endTime = ranges.xaxis.to;
+      this.stopListening(this.selectingTimeRange);
+      this.selectingTimeRange.set({
+        startTime: startTime,
+        endTime: endTime
+      });
+      this.listenTo(this.selectingTimeRange, 'change', this.onSelectingTimeRangeChange);
+    },
+
+    onSelectingTimeRangeChange: function() {
+      if (!this.graph)
+        return;
+      this.graph.setSelection({ 
+        xaxis: { 
+          from: Math.max(this.selectingTimeRange.get('startTime'), this.timeRange.get('startTime')), 
+          to: Math.min(this.selectingTimeRange.get('endTime'), this.timeRange.get('endTime'))
+        }
+      });
+    },
+
+    onTimeRangeChange: function() {
+      this.render();
+      this.selectingTimeRange.set({
+        startTime: this.timeRange.get('startTime'),
+        endTime: this.timeRange.get('endTime')
+      });
     },
 
     render: function() {
@@ -20,13 +54,16 @@ define(function(require) {
               shadowSize: 0
             },
             xaxis: { 
-              mode:'time'
+              mode:'time',
+              autoscale: true,
+              min: this.timeRange.get('startTime'),
+              max: this.timeRange.get('endTime')
             },
             yaxis: {
               show: false
             },
             selection: { 
-              mode: "x", 
+              mode: 'x', 
               color: '#451A2B' 
             }
           };
@@ -37,9 +74,10 @@ define(function(require) {
       }
 
       this.$el.width(800);
-      this.$el.height(50);
+      this.$el.height(60);
 
-      $.plot(this.$el, this.data, options);
+      this.graph = $.plot(this.$el, this.data, options);
+      this.$el.bind('plotselected', this.onSelect);
     },
 
     update: function() {

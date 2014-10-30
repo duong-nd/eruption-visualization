@@ -3,7 +3,8 @@ define(function(require) {
   var $ = require('jquery'),
       Backbone = require('backbone'),
       _ = require('underscore'),
-      UrlHelper = require('helper/url');
+      UrlHelper = require('helper/url'),
+      moment = require('moment');
 
   return Backbone.View.extend({
     initialize: function(options) {
@@ -17,6 +18,7 @@ define(function(require) {
 
       this.listenToOnce(this.volcanoes, 'sync', this.selectVolcano);
       this.listenToOnce(this.eruptions, 'sync', this.selectEruptionByStartTime);
+
     },
 
     selectVolcano: function() {
@@ -29,9 +31,12 @@ define(function(require) {
       var vd_id = UrlHelper.getParam('vd_id'),
           startTime = UrlHelper.getParam('start_time'),
           ed_id = undefined;
+
       if (vd_id && startTime) {
+        startTime = moment.utc(startTime, 'YYYY-MM-DDTHH:mm:ss').format('X');
+
         this.eruptions.models.forEach(function(ed) {
-          if (ed.get('ed_stime') == startTime) {
+          if (ed.get('ed_stime') / 1000 == startTime) {
             ed_id = ed.get('ed_id');
           }
         });

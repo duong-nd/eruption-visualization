@@ -7,8 +7,8 @@ define(function(require) {
       moment = require('moment'),
       Const = require('helper/const'),
       edTemplate = require('text!templates/tooltip_ed.html'),
-      ed_phsTemplate = require('text!templates/tooltip_ed_phs.html'),
-      tooltip = require('views/tooltip');
+      edphsTemplate = require('text!templates/tooltip_ed_phs.html'),
+      Tooltip = require('views/tooltip');
 
   return Backbone.View.extend({
     el: '#eruption-graph',
@@ -17,25 +17,26 @@ define(function(require) {
       _(this).bindAll('render', 'onHover', 'updateStartTime', 'changeTimeRange');
       this.observer = options.observer;
       this.timeRange = options.timeRange;
+      this.edTooltip = new Tooltip({
+        template: edTemplate
+      });
+      this.edphsTooltip = new Tooltip({
+        template: edphsTemplate
+      });
       this.listenTo(this.collection, 'sync', this.render);
       this.listenTo(this.observer, 'change-start-time', this.updateStartTime);
     },
 
     onHover: function(event, pos, item) {
-      var content;
-      if (item) {
-        tooltip.remove();
-        switch (item.series.dataType) {
-          case 'ed':
-            content = _.template(edTemplate, item.series.data[item.dataIndex][4]);
-            break;
-          case 'ed_phs':
-            content = _.template(ed_phsTemplate, item.series.data[item.dataIndex][4]);
-            break;
-        }
-        tooltip.render(pos.pageX, pos.pageY, content);
+      if (!item) {
+        this.edTooltip.hide();
+        this.edphsTooltip.hide();
+      } else if (item.series.dataType === 'ed'){
+        this.edTooltip.update(pos, item);
+        this.edphsTooltip.hide();
       } else {
-        tooltip.remove();
+        this.edphsTooltip.update(pos, item);
+        this.edTooltip.hide();
       }
     },
 

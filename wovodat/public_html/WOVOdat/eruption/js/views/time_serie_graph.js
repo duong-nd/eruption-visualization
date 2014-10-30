@@ -5,15 +5,17 @@ define(function(require) {
       _ = require('underscore'),
       flot = require(['jquery.flot', 'jquery.flot.time', 'jquery.flot.navigate', 'jquery.flot.selection']),
       serieTooltipTemplate = require('text!templates/tooltip_serie.html'),
-      tooltip = require('views/tooltip'),
+      Tooltip = require('views/tooltip'),
       DateHelper = require('helper/date');
 
   return Backbone.View.extend({    
     initialize: function(options) {
-      _(this).bindAll('prepareDataAndRender', 'onTimeRangeChange');
+      _(this).bindAll('prepareDataAndRender', 'onTimeRangeChange', 'onHover', 'onPan');
 
       this.timeRange = options.timeRange;
-
+      this.tooltip = new Tooltip({
+        template: serieTooltipTemplate
+      });
       this.model.fetch();
       this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
       this.listenTo(this.model, 'change', this.prepareDataAndRender);
@@ -24,26 +26,31 @@ define(function(require) {
     },
 
     onHover: function(event, pos, item) {
-      var content;
-      if (item) {
-        tooltip.remove();
-        content = _.template(serieTooltipTemplate, item.series.data[item.dataIndex][4]);      
-        tooltip.render(pos.pageX, pos.pageY, content);
-      } else {
-        tooltip.remove();
-      }
+      this.tooltip.update(pos, item);
+    },
+
+    onPan: function() {
+      var startTime = this.graph.getAxes().xaxis.options.min,
+          endTime = this.graph.getAxes().xaxis.options.max;
+      
+      this.stopListening(this.timeRange, 'change');
+      this.timeRange.set({
+        startTime: startTime,
+        endTime: endTime
+      });
+      this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
     },
 
     render: function() {
       var param_ds = {
-            color: "#5EB7FF",
-            label: "Data Series",
+            color: '#5EB7FF',
+            label: 'Data Series',
             data: this.data,
             bars: {
               show: true,
               wovodat: true
             },
-            dataType: "ds"
+            dataType: 'ds'
           },
           option = {
             grid: {
@@ -52,9 +59,8 @@ define(function(require) {
             xaxis: {
               min: this.timeRange.get('startTime'),
               max: this.timeRange.get('endTime'),
-              mode: "time",
-              autoscale: true,
-              timeformat: "%m-%d<br/>%Y"
+              mode: 'time',
+              autoscale: true
             },
             yaxis: {
               min: 0,
@@ -63,6 +69,12 @@ define(function(require) {
               panRange: false,
               zoomRange: false
             },
+            pan: {
+              interactive: true
+            },
+            zoom: {
+              interactive: true
+            }
           };
 
       this.$el.html('<div></div>');
@@ -71,6 +83,8 @@ define(function(require) {
 
       this.graph = $.plot(this.$el, [param_ds], option);
       this.$el.bind('plothover', this.onHover);
+      this.$el.bind('plotpan', this.onPan);
+      this.$el.bind('plotzoom', this.onPan);
     },
 
     prepareDataAndRender: function() {
@@ -87,6 +101,7 @@ define(function(require) {
     },
 
     destroy: function() {
+      // From StackOverflow with love.
       this.undelegateEvents();
       this.$el.removeData().unbind(); 
       this.remove();  

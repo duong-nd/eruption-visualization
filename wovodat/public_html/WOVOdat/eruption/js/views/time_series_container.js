@@ -5,7 +5,8 @@ define(function(require) {
       _ = require('underscore'),
       Serie = require('models/serie'),
       TimeSerieGraph = require('views/time_serie_graph'),
-      OverviewGraph = require('views/overview_graph');
+      OverviewGraph = require('views/overview_graph'),
+      TimeRange = require('models/time_range');
 
   return Backbone.View.extend({
     el: '#time-series-container',
@@ -14,6 +15,7 @@ define(function(require) {
       _(this).bindAll('addSerie', 'removeSerie');
 
       this.timeRange = options.timeRange;
+      this.overviewSelectingTimeRange = new TimeRange();
 
       this.graphs = {};
 
@@ -26,7 +28,7 @@ define(function(require) {
     addSerie: function(sr_id) {
       this.graphs[sr_id] = new TimeSerieGraph({
         model: this.collection.get(sr_id),
-        timeRange: this.timeRange
+        timeRange: this.overviewSelectingTimeRange
       });
 
       this.$el.append(this.graphs[sr_id].$el);
@@ -38,7 +40,9 @@ define(function(require) {
 
     render: function() {
       this.overviewGraph = new OverviewGraph({
-        collection: this.collection
+        collection: this.collection,
+        timeRange: this.timeRange,
+        selectingTimeRange: this.overviewSelectingTimeRange
       });
       this.overviewGraph.$el.appendTo(this.$el);
     }
