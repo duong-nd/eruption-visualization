@@ -36,45 +36,45 @@ define(function(require) {
           volcanoes = new Volcanoes(),
           selectingVolcano = new Volcano(),
           selectingEruption = new Eruption();
-
+      
       new VolcanoSelect({
         collection: volcanoes,
         observer: observer,
         selectingVolcano: selectingVolcano
-      });
+      }).$el.appendTo(this.$el);
 
       new EruptionSelect({
         collection: eruptions,
         observer: observer,
         volcano: selectingVolcano,
         selectingEruption: selectingEruption
-      });
+      }).$el.appendTo(this.$el);
 
       new EruptionGraph({
         collection: eruptions,
         observer: observer,
         timeRange: timeRange
-      });
+      }).$el.appendTo(this.$el);
 
       new EruptionForecastGraph({
         collection: new EruptionForecasts(),
         observer: observer,
         timeRange: timeRange,
         volcano: selectingVolcano
-      });
+      }).$el.appendTo(this.$el);
 
       new TimeSeriesSelect({
         collection: new TimeSeries(),
         observer: observer,
         selectingTimeSeries: selectingTimeSeries,
         volcano: selectingVolcano
-      });
+      }).$el.appendTo(this.$el);
 
       new TimeSeriesContainer({
         observer: observer,
         timeRange: timeRange,
         collection: selectingTimeSeries
-      });
+      }).$el.appendTo(this.$el);
 
       new UrlLoader({
         observer: observer,
@@ -82,7 +82,7 @@ define(function(require) {
         selectingVolcano: selectingVolcano,
         eruptions: eruptions,
         selectingEruption: selectingEruption
-      });
+      }).$el.appendTo(this.$el);
     }
   });
 });

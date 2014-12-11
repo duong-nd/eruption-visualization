@@ -6,7 +6,7 @@ define(function(require) {
       template = require('text!templates/volcano_select.html');
 
   return Backbone.View.extend({
-    el: '#volcano-selection-container',
+    el: '',
 
     template: _.template(template),
 

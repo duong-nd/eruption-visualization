@@ -11,7 +11,7 @@ define(function(require) {
       Tooltip = require('views/tooltip');
 
   return Backbone.View.extend({
-    el: '#eruption-graph',
+    el: '',
     
     initialize: function(options) {
       _(this).bindAll('render', 'onHover', 'updateStartTime', 'changeTimeRange');
@@ -102,6 +102,9 @@ define(function(require) {
         el.html('');
         return;
       }
+      
+      el.width(800);
+      el.height(200);
 
       this.graph = $.plot(el, [param_ed, param_ed_phs], option);
 

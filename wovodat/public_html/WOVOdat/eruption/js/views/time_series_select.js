@@ -6,7 +6,7 @@ define(function(require) {
       template = require('text!templates/time_series_select.html');
 
   return Backbone.View.extend({
-    el: '#time-series-selection-container',
+    el: '',
 
     events: {
       'change input': 'onChange'

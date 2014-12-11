@@ -1,6 +1,7 @@
+<div class="time-series-selection-container">
 <% if (!_.isEmpty(timeSeries)) { %>
-  <br/>
   <% _.forEach(timeSeries, function(timeSerie) { %>
   <input type="checkbox" value="<%= timeSerie.get('sr_id') %>"/><%= timeSerie.get('category') %> - <%= timeSerie.get('data_type') %> - <%= timeSerie.get('station_code') %><br/>
   <% }); %>
 <% } %>
+</div>

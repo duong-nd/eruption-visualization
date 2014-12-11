@@ -8,7 +8,7 @@ define(function(require) {
       Tooltip = require('views/tooltip');
 
   return Backbone.View.extend({
-    el: '#eruption-forecast-graph',
+    el: '',
     
     initialize: function(options) {
       _(this).bindAll('render', 'onHover', 'onTimeRangeChange', 'onDataChange', 'onVolcanoChange');
@@ -104,6 +104,9 @@ define(function(require) {
         el.html('');
         return;
       }
+
+      el.width(800);
+      el.height(60);
 
       $.plot(el, [param_ed_for], option);
       el.bind('plothover', this.onHover);

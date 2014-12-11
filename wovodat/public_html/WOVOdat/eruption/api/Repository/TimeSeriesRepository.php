@@ -3,10 +3,13 @@
  *	This class supports query the data series (deformation, gas, seismic..) for a volcano
  * 	
  */
+DEFINE('HOST', 'wovodat.org');
+
 class TimeSeriesRepository {
 
   private static function saveSerie($newSerie) {
     $series = json_decode(file_get_contents('Serie/Series.json', true), true);
+    $found = false;
     foreach ($series as $key => $serie) {
       if ($serie['sr_id'] == $newSerie['sr_id']) {
         $series[$key] = $newSerie;
@@ -57,7 +60,7 @@ class TimeSeriesRepository {
   	$db->query($query, $vd_id);
   	$vd_cavw = $db->getValue();
 
-    $strs = explode(';', file_get_contents("http://localhost/php/switch.php?get=TimeSeriesForVolcano&cavw=" . $vd_cavw));
+    $strs = explode(';', file_get_contents("http://" . HOST . "/php/switch.php?get=TimeSeriesForVolcano&cavw=" . $vd_cavw));
     
     $series = array();
   	
@@ -71,7 +74,10 @@ class TimeSeriesRepository {
   		$serie['category'] = $splitted[0];
   		$serie['data_type'] = $splitted[1];
   		$serie['station_code'] = $splitted[2];
-      $serie['component'] = $splitted[5];
+      if (array_key_exists(5, $splitted))
+        $serie['component'] = $splitted[5];
+      else
+        $serie['component'] = '';
   	  
       self::saveSerie($serie);	
   		
@@ -87,7 +93,7 @@ class TimeSeriesRepository {
       return null;
 
     // Construct the url.
-    $url = 'http://localhost/php/switch.php?get=StationData';
+    $url = 'http://' . HOST . '/php/switch.php?get=StationData';
     $url .= '&type=' . strtolower($serie['category']);
     $url .= '&table=' . $serie['data_type'];
     $url .= '&code=' . $serie['station_code'];

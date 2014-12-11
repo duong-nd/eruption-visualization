@@ -1,7 +1,7 @@
 {
   "name": "eruption",
   "version": "0.0.0",
-  "homepage": "https://github.com/duong-nd/eruption-visualization",
+  "homepage": "http://wovodat.org",
   "license": "MIT",
   "ignore": [
     "**/.*",

@@ -39,8 +39,7 @@ define(function(require) {
     },
 
     previous: {
-      dataIndex: undefined,
-      content: undefined
+      dataIndex: -8121993
     },
 
     update: function(pos, item) {
@@ -49,8 +48,7 @@ define(function(require) {
           this.move(pos.pageX, pos.pageY);
         } else {
           this.previous.dataIndex = item.dataIndex;
-          this.previous.content = this.template(item.series.data[item.dataIndex][4]);
-          this.render(pos.pageX, pos.pageY, this.previous.content);
+          this.render(pos.pageX, pos.pageY, this.template(item.series.data[item.dataIndex][4]));
         }
       } else {
         this.hide();

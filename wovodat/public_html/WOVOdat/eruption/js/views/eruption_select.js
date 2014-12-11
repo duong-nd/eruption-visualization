@@ -6,7 +6,7 @@ define(function(require) {
       template = require('text!templates/eruption_select.html');
 
   return Backbone.View.extend({
-    el: '#eruption-selection-container',
+    el: '',
 
     template: _.template(template),
 

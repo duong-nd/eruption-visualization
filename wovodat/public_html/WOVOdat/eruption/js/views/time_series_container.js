@@ -9,7 +9,7 @@ define(function(require) {
       TimeRange = require('models/time_range');
 
   return Backbone.View.extend({
-    el: '#time-series-container',
+    el: '',
     
     initialize: function(options) {
       _(this).bindAll('addSerie', 'removeSerie');
