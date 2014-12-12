@@ -1,4 +1,0 @@
-sd_wav_id,sd_wav_code,ss_id,sd_evt_id,sd_evt_flag,sd_wav_arch,sd_wav_link,sd_wav_dist,sd_wav_img,sd_wav_info,sd_wav_desc,cc_id,cc_id2,cc_id3,sd_wav_loaddate,sd_wav_pubdate,cc_id_load,cb_ids
-1,123,12,12,N,arch,link,D,img,information,description,199,200,269,2012-01-12 10:26:23,2012-01-12 10:26:25,NULL,NULL
-2,456,12,12,N,arch,link,D,img,information,description,199,200,269,2012-01-12 10:26:23,2012-01-12 10:26:25,NULL,NULL
-3,789,12,12,N,arch,link,D,img,information,description,199,200,269,2012-01-12 10:26:23,2012-01-12 10:26:25,NULL,NULL
