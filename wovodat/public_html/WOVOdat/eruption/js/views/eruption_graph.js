@@ -97,13 +97,7 @@ define(function(require) {
               interactive: true
             }
           };
-
-      /*
-      if (!data.edData.length) {
-        el.html('');
-        return;
-      }
-      */
+          
       el.width(800);
       el.height(200);
 
