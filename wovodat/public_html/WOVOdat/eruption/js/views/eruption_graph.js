@@ -98,11 +98,12 @@ define(function(require) {
             }
           };
 
+      /*
       if (!data.edData.length) {
         el.html('');
         return;
       }
-      
+      */
       el.width(800);
       el.height(200);
 
