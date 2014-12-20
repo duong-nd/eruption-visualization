@@ -12,17 +12,32 @@ define(function(require) {
     el: '',
     
     initialize: function(options) {
-      _(this).bindAll('addSerie', 'removeSerie');
+      _(this).bindAll('addSerie', 'removeSerie', 'clear');
 
       this.timeRange = options.timeRange;
       this.overviewSelectingTimeRange = new TimeRange();
 
       this.graphs = {};
 
+      this.listenTo(this.collection, 'reset', this.clear);
+
       this.listenTo(this.collection, 'add', this.addSerie);
       this.listenTo(this.collection, 'remove', this.removeSerie);
 
       this.render();
+    },
+
+    clear: function() {
+      if (this.collection.length === 0) {
+        this.overviewGraph.destroy();
+        for (var g in this.graphs) {
+          if (this.graphs.hasOwnProperty(g)) {
+            this.graphs[g].destroy();
+          }
+        }
+        this.graphs = {};
+        this.render();
+      }
     },
 
     addSerie: function(sr_id) {

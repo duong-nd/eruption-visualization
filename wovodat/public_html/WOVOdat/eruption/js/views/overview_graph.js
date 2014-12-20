@@ -113,7 +113,14 @@ define(function(require) {
       this.minX = minX;
       this.maxX = maxX;
       this.data = data;
-    }
+    },
 
+    destroy: function() {
+      // From StackOverflow with love.
+      this.undelegateEvents();
+      this.$el.removeData().unbind(); 
+      this.remove();  
+      Backbone.View.prototype.remove.call(this);
+    }
   });
 });
