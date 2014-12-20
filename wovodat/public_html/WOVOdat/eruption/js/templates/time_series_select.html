@@ -4,4 +4,6 @@
     <input type="checkbox" value="<%= timeSerie.get('sr_id') %>"/><%= timeSerie.get('category') %> - <%= timeSerie.get('data_type') %> - <%= timeSerie.get('station_code') %><br/>
     <% }); %>
   </div>
+<% } else { %>
+  <div>No time serie found.</div>
 <% } %>
