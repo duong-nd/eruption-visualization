@@ -5,6 +5,7 @@
 	*/
 
 	define("_SECURITY", true);
+	set_time_limit(0);
 	
 	require_once 'Config/Configuration.php';
 	require_once 'Include/Database.php';
