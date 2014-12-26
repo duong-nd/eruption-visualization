@@ -131,7 +131,7 @@ define(function(require) {
         
         edData.push([ed_stime, ed_vei, 0, ed_etime - ed_stime, ed.attributes]);
 
-        endOfTime = Math.max(endOfTime, ed_etime);
+        endOfTime = Math.max(endOfTime, ed_stime + Const.ONE_YEAR);
 
         ed.get('ed_phs').forEach(function(ed_phs) {
           var ed_phs_stime = ed_phs.ed_phs_stime,
@@ -142,9 +142,6 @@ define(function(require) {
         });
       });
 
-
-      console.log(endOfTime);
-      
       return {
         edData: edData,
         ed_phsData: ed_phsData,
