@@ -142,6 +142,9 @@ define(function(require) {
         });
       });
 
+
+      console.log(endOfTime);
+      
       return {
         edData: edData,
         ed_phsData: ed_phsData,
