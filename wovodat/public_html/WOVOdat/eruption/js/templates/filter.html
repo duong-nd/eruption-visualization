@@ -1,0 +1,8 @@
+<div>
+<select>
+    <% _.each(options, function(t) { %>
+    <option value="<%= t.get('value') %>"><%= t.get('value') %></option>
+    <% }); %>
+
+</select>
+</div>
