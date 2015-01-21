@@ -3,7 +3,7 @@
  *	This class supports query the data series (deformation, gas, seismic..) for a volcano
  * 	
  */
-DEFINE('HOST', 'localhost');
+DEFINE('HOST', 'wovodat.org');
 
 class TimeSeriesRepository {
 
@@ -100,7 +100,8 @@ class TimeSeriesRepository {
     $url .= '&component=' . $serie['component'];
 
     // Fetch the url.
-    $content = self::preprocessSerieData(json_decode(file_get_contents($url), true)[0]);
+    $fetch = json_decode(file_get_contents($url), true);
+    $content = self::preprocessSerieData($fetch[0]);
 
     $serie['data'] = $content;
 
