@@ -1,6 +1,6 @@
 <?php
   session_start();
-  //if (!isset($_SESSION['login'])) {    header('Location: /populate/index.php');    exit();  }
+  if (!isset($_SESSION['login'])) {    header('Location: /populate/index.php');    exit();  }
 ?>
 <html>
   <head>

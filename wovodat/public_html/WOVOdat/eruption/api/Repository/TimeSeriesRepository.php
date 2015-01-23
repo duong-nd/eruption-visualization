@@ -3,7 +3,7 @@
  *	This class supports query the data series (deformation, gas, seismic..) for a volcano
  * 	
  */
-DEFINE('HOST', 'wovodat.org');
+DEFINE('HOST', 'localhost');
 
 class TimeSeriesRepository {
 
@@ -38,6 +38,28 @@ class TimeSeriesRepository {
         $b['end_time'] = $a['etime'];
       } else {
         $b['time'] = $a['0'];
+      }
+      if (array_key_exists('eqtype',$a)) {
+        $b['filter'] = $a['eqtype'];
+      }
+      if (array_key_exists('gas_species',$a)) {
+        $b['filter'] = $a['gas_species'];
+      }
+      
+      if (array_key_exists('trm_type',$a)) {
+        $b['filter'] = $a['trm_type'];
+      }
+            
+      if (array_key_exists('compound',$a)) {
+        $b['filter'] = $a['compound'];
+      }
+            
+      if (array_key_exists('tprec',$a)) {
+        $b['filter'] = $a['tprec'];
+      }
+      
+      if (array_key_exists('author_info',$a)) {
+        $b['author_info'] = $a['author_info'];
       }
       $b['value'] = $a['1'];
 
@@ -104,7 +126,6 @@ class TimeSeriesRepository {
     $content = self::preprocessSerieData($fetch[0]);
 
     $serie['data'] = $content;
-
     return $serie;
   }
 } 
