@@ -33,7 +33,14 @@ define(function(require) {
     
     prepareDataAndRender: function() {
       var options = {}, data = this.model.get('data');
+/*      if (this.model.get('category').indexOf('Seismic') != -1) {
+        if(this.model.get('data_type').indexOf("Interval")!=-1 || this.model.get('data_type').indexOf("EVS")!=-1) {
+          options = this.OptionForFilterEQType();
+        }
+      }
+      */
       options = this.OptionForFilter();
+      console.log(options);
       if (options.length > 0) {
         this.render(options);
       }

@@ -32,6 +32,7 @@ define(function(require) {
         this.edTooltip.hide();
         this.edphsTooltip.hide();
       } else if (item.series.dataType === 'ed'){
+        console.log(item);
         this.edTooltip.update(pos, item);
         this.edphsTooltip.hide();
       } else {
@@ -97,7 +98,12 @@ define(function(require) {
               interactive: true
             }
           };
-          
+      console.log(data.edData);
+      if (!data.edData.length) {
+        el.html('');
+        return;
+      }
+      
       el.width(800);
       el.height(200);
 
@@ -131,7 +137,7 @@ define(function(require) {
         
         edData.push([ed_stime, ed_vei, 0, ed_etime - ed_stime, ed.attributes]);
 
-        endOfTime = Math.max(endOfTime, ed_stime + Const.ONE_YEAR);
+        endOfTime = Math.max(endOfTime, ed_etime);
 
         ed.get('ed_phs').forEach(function(ed_phs) {
           var ed_phs_stime = ed_phs.ed_phs_stime,

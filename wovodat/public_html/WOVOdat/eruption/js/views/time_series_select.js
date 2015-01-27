@@ -25,7 +25,6 @@ define(function(require) {
 
     changeVolcano: function() {
       this.collection.changeVolcano(this.volcano.get('vd_id'));
-      this.selectings.reset();
     },
 
     render: function() {
@@ -41,14 +40,6 @@ define(function(require) {
         this.selectings.add(id);
       else 
         this.selectings.remove(this.selectings.get(id));
-    },
-
-    destroy: function() {
-      // From StackOverflow with love.
-      this.undelegateEvents();
-      this.$el.removeData().unbind(); 
-      this.remove();  
-      Backbone.View.prototype.remove.call(this);
     }
   });
 });

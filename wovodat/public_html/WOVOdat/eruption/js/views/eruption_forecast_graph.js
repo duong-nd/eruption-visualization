@@ -99,7 +99,12 @@ define(function(require) {
               panRange: false
             }
           };
-          
+
+      if (!options || !options.startTime || !options.endTime || !options.data || !options.data.length) {
+        el.html('');
+        return;
+      }
+
       el.width(800);
       el.height(60);
 

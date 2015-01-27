@@ -6,7 +6,6 @@ define(function(require) {
       flot = require(['jquery.flot', 'jquery.flot.time', 'jquery.flot.navigate', 'jquery.flot.selection']),
       serieTooltipTemplate = require('text!templates/tooltip_serie.html'),
       Tooltip = require('views/tooltip'),
-      Filter = require('views/filter'),
       DateHelper = require('helper/date');
 
   return Backbone.View.extend({    
@@ -14,13 +13,12 @@ define(function(require) {
       _(this).bindAll('prepareDataAndRender', 'onTimeRangeChange', 'onHover', 'onPan');
 
       this.timeRange = options.timeRange;
-      this.filter = options.filter;
-      
       this.tooltip = new Tooltip({
         template: serieTooltipTemplate
       });
+      this.model.fetch();
       this.listenTo(this.timeRange, 'change', this.onTimeRangeChange);
-      this.listenTo(this.filter, 'change', this.prepareDataAndRender);
+      this.listenTo(this.model, 'change', this.prepareDataAndRender);
     },
 
     onTimeRangeChange: function() {
@@ -49,11 +47,7 @@ define(function(require) {
             label: 'Data Series',
             data: this.data,
             bars: {
-              show: this.bars,
-              wovodat: true
-            },
-            lines: {
-              show: this.lines,
+              show: true,
               wovodat: true
             },
             dataType: 'ds'
@@ -96,26 +90,14 @@ define(function(require) {
     prepareDataAndRender: function() {
       var i,
           data = this.model.get('data'),
-          a = [],
-          category = this.model.get('category'),
-          selectedFilter = this.filter.get('value');
-      if (data[0].start_time)
-        this.bars = true;
-      if (data[0].time)
-        this.lines = true;
-      
+          a = [];
       this.model.get('data').forEach(function(ds) {
-        if ( (!selectedFilter)  || _.isEqual(ds.filter, selectedFilter)) {
-          ds.formattedStartTime = DateHelper.formatDate(ds.start_time);
-          ds.formattedEndTime = DateHelper.formatDate(ds.end_time);
-          if (ds.start_time)
-            a.push([ds.start_time, ds.value, 0, ds.end_time - ds.start_time, ds]);
-          else 
-            a.push([ds.time, ds.value, 0, ds]);
-        }
+        ds.formattedStartTime = DateHelper.formatDate(ds.start_time);
+        ds.formattedEndTime = DateHelper.formatDate(ds.end_time);
+        a.push([ds.start_time, ds.value, 0, ds.end_time - ds.start_time, ds]);
       });
       this.data = a;
-      this.render(); 
+      this.render();
     },
 
     destroy: function() {
